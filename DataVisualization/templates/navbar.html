@@ -1,0 +1,55 @@
+{% url 'home' as path_to_home %}
+{% url 'login' as path_to_login %}
+{% url 'logout' as path_to_logout %}
+{% url 'products:main-products-view' as path_to_performance %}
+{% url 'products:add-purchase' as path_to_add_purchase %}
+{% url 'csvs:upload-view' as path_to_upload_csv %}
+{% url 'customers:main-customers-view' as path_to_customers %}
+{% url 'products:sales-view' as path_to_sales %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item ">
+            <a class="nav-link {% if request.path == path_to_home %} active {%  endif %}" aria-current="page" href="{{path_to_home}}">Home</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == path_to_performance %} active {%  endif %}" href="{{path_to_performance}}">Performance</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == path_to_add_purchase %} active {%  endif %}" href="{{path_to_add_purchase}}">Add Records</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == path_to_upload_csv %} active {%  endif %}" href="{{path_to_upload_csv}}">Upload CSV</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == path_to_customers %} active {%  endif %}" href="{{path_to_customers}}"> Customers </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == path_to_sales %} active {%  endif %}" href="{{path_to_sales}}"> Sales </a>
+          </li>
+          <div class="d-flex">
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == path_to_logout %} active {%  endif %}" href="{{path_to_logout}}"> Logout </a>
+            </li>          
+          </div>
+
+          {% else %}
+          <div class="d-flex">
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == path_to_login %} active {%  endif %}" href="{{path_to_login}}"> Login </a>
+            </li>          
+          </div>
+
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

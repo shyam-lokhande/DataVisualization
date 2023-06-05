@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+
+{% if err_msg %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ err_msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>  
+{% endif %}
+<h1>Login</h1>
+
+<form action="" method="POST" class="form">
+    {% csrf_token %}
+    {{form}}
+    <button class="btn btn-primary" type="submit">Login</button>
+</form>
+
+
+{% endblock %}

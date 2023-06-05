@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}performances{% endblock title %}
+
+{% block content %}
+
+
+{% if err_msg %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ err_msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>  
+{% endif %}
+
+<form class="row border border-dark m-4" action="" method="POST">
+    {% csrf_token %}
+        <div class="col-12 mb-3 mt-5">
+            <label for="sales" class="mx-3">Choose the Chart</label>
+            <select name="chart" class="form-select">
+               
+                <option value="bar" selected>bar</option>
+                <option value="line">line</option>
+                <option value="count">count</option>
+              </select>
+
+        </div>
+
+        <div class="col-6 my-3">
+            <label class="form-label" for="date_from">Date From </label>
+            <input type="date" id="date_from" name="date_from" class="form-control">
+        </div>
+        <div class="col-6 my-3 ">
+            <label class="form-label" for="date_to">Date To</label>
+            <input type="date" id="date_to" name="date_to" class="form-control" >
+          </div>
+
+          <div class="col-12 text-center my-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+</form>
+<!-- Button trigger modal -->
+<div class="row">
+  <div class="col-6 text-center">
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+   Summary
+  </button>
+</div>
+<div class="col-6 text-center">
+  <a href="{% url 'products:add-purchase' %}" ><button type="button" class="m-1 btn btn-success" >Add Record</button></a>
+</div>
+</div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Summary</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Measures</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Mean</th>
+                    <td>{{price.mean}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Median</th>
+                    <td>{{price.median}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Standard Deviation</th>
+                    <td>{{price.std|floatformat}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Minimum Value</th>
+                    <td>{{price.min}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Maximum Value</th>
+                    <td>{{price.max}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  {% if request.POST %}
+    {% if graph %}
+        <img class="img" src="data:image/png;base64, {{ graph | safe }}" width="auto"/>
+    {% endif %}
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Purchase{% endblock title %}
+
+
+{% block content %}
+    {% if add_msg %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ add_msg}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>  
+    {% endif %}
+
+    
+    <h1>Add</h1>
+    <form class="row" action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary m-3"> Add Data</button>
+    </form>
+{% endblock %}
